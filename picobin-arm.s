@@ -9,7 +9,7 @@
 
 .word 0xffffded3 /*PICOBIN_BLOCK_MARKER_START*/
 
-/*TODO: This blob should vary based on board configuration. This is just a carbon copy of the datasheet example.*/
+/*TODO: This blob should vary based on board configuration. This is just a carbon copy of the datasheet example for ARM.*/
 
 .word 0x10210142
 .word 0x000001ff

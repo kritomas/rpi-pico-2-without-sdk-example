@@ -28,10 +28,12 @@ RP2_FAMILY_ID_SECURE_ARM = 0xe48bff59
 RP2_FAMILY_ID_RISCV = 0xe48bff5a
 RP2_FAMILY_ID_NONSECURE_ARM = 0xe48bff5b
 
+ARCHITECTURES = {"arm": RP2_FAMILY_ID_SECURE_ARM, "riscv": RP2_FAMILY_ID_RISCV}
+
 BLOCK_SIZE = 512
 PAYLOAD_SIZE = 256
 
-def generate_block(address, block_no, total_blocks, chunk):
+def generate_block(address, block_no, total_blocks, chunk, arch):
 	payload = chunk + bytes(256 - len(chunk))
 	header = struct.pack("<IIIIIIII",
 		UF2_MAGIC1,
@@ -41,7 +43,7 @@ def generate_block(address, block_no, total_blocks, chunk):
 		PAYLOAD_SIZE,
 		block_no,
 		total_blocks,
-		RP2_FAMILY_ID_SECURE_ARM,
+		ARCHITECTURES[arch],
 	)
 	footer = struct.pack("<I",
 		UF2_MAGIC_END
@@ -51,13 +53,14 @@ def generate_block(address, block_no, total_blocks, chunk):
 
 
 def main():
-	if len(sys.argv) != 4:
-		print("Usage: input.bin output.uf2 <base_addr>")
+	if len(sys.argv) != 5:
+		print("Usage: input.bin output.uf2 <base_addr> 'arm'/'riscv'")
 		sys.exit(1)
 
 	in_path  = sys.argv[1]
 	out_path = sys.argv[2]
 	base_addr = int(sys.argv[3], 0)
+	arch = sys.argv[4]
 
 	with open(in_path, "rb") as f:
 		data = f.read()
@@ -67,7 +70,7 @@ def main():
 	out = bytearray()
 	addr = base_addr
 	for i, ch in enumerate(chunks):
-		out += generate_block(addr, i, total_blocks, ch)
+		out += generate_block(addr, i, total_blocks, ch, arch)
 		addr += len(ch)
 
 	with open(out_path, "wb") as f:
