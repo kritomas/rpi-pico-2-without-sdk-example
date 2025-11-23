@@ -4,7 +4,7 @@ MEMORY {
 	RAM (rwx) : ORIGIN =  0x20000000, LENGTH = 256K /*Define RAM*/
 }
 
-__stack_top = ALIGN(8, ORIGIN(RAM) + LENGTH(RAM)); /*Set __stack_top to the end of RAM*/
+__stack_top__ = ALIGN(8, ORIGIN(RAM) + LENGTH(RAM)); /*Set __stack_top__ to the end of RAM*/
 
 SECTIONS
 {
