@@ -68,7 +68,7 @@ def main():
 	addr = base_addr
 	for i, ch in enumerate(chunks):
 		out += generate_block(addr, i, total_blocks, ch)
-		addr += BLOCK_SIZE
+		addr += len(ch)
 
 	with open(out_path, "wb") as f:
 		f.write(out)

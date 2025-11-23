@@ -8,6 +8,7 @@ __stack_top__ = ALIGN(8, ORIGIN(RAM) + LENGTH(RAM)); /*Set __stack_top__ to the 
 
 SECTIONS
 {
+	. = ALIGN(4);
 	.text :
 	{
 		_vector = .;
@@ -20,7 +21,6 @@ SECTIONS
 	{
 		*(.data*)
 	} > RAM
-	. = ALIGN(4);
 }
 
-ENTRY(_vector)
+ENTRY(_start)

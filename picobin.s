@@ -1,3 +1,7 @@
+.syntax unified
+.cpu cortex-m33
+.thumb
+
 .section .picobin_block, "a"
 
 /* The Pico 2 will refuse to load any image not containing this specific blob within the first 4kB. */
@@ -5,9 +9,9 @@
 
 .word 0xffffded3 /*PICOBIN_BLOCK_MARKER_START*/
 
-/*TODO: This blob should vary based on board configuration. This blob is just a carbon copy of the datasheet example.*/
+/*TODO: This blob should vary based on board configuration. This is just a carbon copy of the datasheet example.*/
 
-.word 0x11010142
+.word 0x10210142
 .word 0x000001ff
 .word 0x00000000
 
