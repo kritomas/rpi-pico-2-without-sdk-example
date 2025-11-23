@@ -23,3 +23,9 @@ Then, you can compile everything by running `make arm`/`make riscv`, which will 
 Lastly, flash the example by putting the pico into bootloader mode and just dragging `arm.uf2`/`riscv.uf2` over.
 
 If everything is working correctly, the pico should disconnect itself, and the LED should light up.
+
+# Curiosities
+
+The Pico 2 bootloader can switch architectures on the go, no need to configure it, just flash the correct image in the right architecture, and it figures out the rest.
+
+Also notice that the C code actually operating the LED is exactly the same for both architectures. Infact, the only difference code-wise is the initial loader (in assembly) which is solely responsible for setting things up so the C code can execute. And yet, you still get low level access to system resources. This is what they mean when they say that "C is basically portable assembly".
